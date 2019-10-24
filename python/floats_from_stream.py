@@ -34,7 +34,7 @@ try:
         # Despite the docs, we use read() here since we want to poll
         # the process for chunks of 3072 bytes, each of which is a frame
         # sizeof(float) * 768 measurements in a frame = 3072 bytes
-        frame = mlx.stdout.read()
+        frame = mlx.stdout.read(3072)
         size = len(frame)
         print("Got {} bytes of data!".format(size))
 
