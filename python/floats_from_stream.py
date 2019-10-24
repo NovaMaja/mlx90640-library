@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 import array
 import time
-from datetime import datetime
 import subprocess
 import argparse
-from PIL import Image
 import os
 
 MAX_FRAMES = 50           # Large sizes get big quick!
