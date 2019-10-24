@@ -57,6 +57,7 @@ try:
 except KeyboardInterrupt:
     pass
 finally:
+    print('caught {} frames'.format(len(frames)))
     if len(frames) > 1:
         for f in frames:
             print(f)
