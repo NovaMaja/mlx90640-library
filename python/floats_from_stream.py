@@ -29,30 +29,30 @@ if not os.path.isfile(RAW_RGB_PATH):
     raise RuntimeError("{} doesn't exist, did you forget to run \"make\"?".format(RAW_RGB_PATH))
 
 try:
-    with subprocess.Popen(["sudo", RAW_RGB_PATH, "{}".format(fps)], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE) as mlx:
-        while True:
-            # Despite the docs, we use read() here since we want to poll
-            # the process for chunks of 3072 bytes, each of which is a frame
-            # sizeof(float) * 768 measurements in a frame = 3072 bytes
-            frame = array.array('f', [])
-            frame.fromfile(mlx.stdout, 768)
-            size = len(frame)
-            print("Got {} bytes of data!".format(size))
+    mlx = subprocess.Popen(["sudo", RAW_RGB_PATH, "{}".format(fps)], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    while True:
+        # Despite the docs, we use read() here since we want to poll
+        # the process for chunks of 3072 bytes, each of which is a frame
+        # sizeof(float) * 768 measurements in a frame = 3072 bytes
+        frame = array.array('f', [])
+        frame.fromfile(mlx.stdout, 768)
+        size = len(frame)
+        print("Got {} bytes of data!".format(size))
 
-            if skip_frames > 0:
-                time.sleep(1.0 / fps)
-                skip_frames -= 1
-                continue
-
-            # Convert the raw frame bytes into a PIL image and resize
-            # image = Image.frombytes('RGB', (32, 24), frame)
-
-            frames.append(frame)
-            print("Frames: {}".format(len(frames)))
-            if len(frames) == max_frames:
-                break
-
+        if skip_frames > 0:
             time.sleep(1.0 / fps)
+            skip_frames -= 1
+            continue
+
+        # Convert the raw frame bytes into a PIL image and resize
+        # image = Image.frombytes('RGB', (32, 24), frame)
+
+        frames.append(frame)
+        print("Frames: {}".format(len(frames)))
+        if len(frames) == max_frames:
+            break
+
+        time.sleep(1.0 / fps)
 
 except KeyboardInterrupt:
     pass
