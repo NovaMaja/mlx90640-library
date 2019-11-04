@@ -31,7 +31,11 @@
 #include <sys/ioctl.h>
 
 int i2c_fd = 0;
-const char *i2c_device = "/dev/i2c-1";
+
+// set i2c device here. if using beaglebone this shopuld be i2c-3, 
+// for raspberry pi use i2c-1 
+// you can check which i2c devices are available using i2cdetect -l
+const char *i2c_device = "/dev/i2c-3";
 
 void MLX90640_I2CInit()
 {
