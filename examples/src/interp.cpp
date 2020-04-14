@@ -11,7 +11,7 @@
 
 #define MLX_I2C_ADDR 0x33
 
-#define IMAGE_SCALE 4
+#define IMAGE_SCALE 10
 
 #define OUTPUT_W (int)(24*2)
 #define OUTPUT_H (int)(32*2)
@@ -124,7 +124,7 @@ int main(){
         for(int y = 0; y < OUTPUT_W; y++){
             for(int x = 0; x < OUTPUT_H; x++){
                 float val = resized[OUTPUT_H * (OUTPUT_W-1-y) + x];
-                put_pixel_false_colour((y*IMAGE_SCALE), (x*IMAGE_SCALE), val);
+                put_pixel_false_colour((x*IMAGE_SCALE), (y*IMAGE_SCALE), val);
             }
         }
         auto end = std::chrono::system_clock::now();
